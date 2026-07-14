@@ -104,8 +104,8 @@ export default function FacebookPage() {
         <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-10 lg:py-12 relative overflow-hidden">
             {/* Background Watermarks - hidden on mobile */}
   
-            <div className="hidden lg:block absolute top-40 left-[10px] pointer-events-none -z-10">
-                <img src="/logos/facebook.png" alt="" className="w-[400px] h-[400px] object-contain opacity-[0.3] blur-sm rotate-[-15deg]" />
+            <div className="hidden lg:block absolute top-40 left-[30px] pointer-events-none -z-10">
+                <img src="/logos/facebook.png" alt="" className="w-[300px] h-[300px] object-contain opacity-[0.3] blur-sm rotate-[-15deg]" />
             </div>
             
             {/* Back Button */}
