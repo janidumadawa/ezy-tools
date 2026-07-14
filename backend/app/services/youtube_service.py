@@ -2,18 +2,55 @@ import yt_dlp
 from ..utils.downloader import BaseDownloader
 import time
 import os
-import subprocess
+import requests
+import json
 
 class YouTubeService(BaseDownloader):
-    """YouTube download service"""
+    """YouTube download service using free APIs"""
+    
+    # Free YouTube API endpoints that work
+    API_ENDPOINTS = [
+        "https://inv.nadeko.net/api/v1/videos/",
+        "https://invidious.slipfox.xyz/api/v1/videos/",
+        "https://yt.artemislena.eu/api/v1/videos/",
+    ]
     
     def get_video_info(self, url: str) -> dict:
         """Get YouTube video information"""
+        video_id = self._extract_id(url)
+        if not video_id:
+            raise Exception("Invalid YouTube URL")
+        
+        # Try free Invidious API first
+        for api_url in self.API_ENDPOINTS:
+            try:
+                response = requests.get(f"{api_url}{video_id}", timeout=10)
+                if response.status_code == 200:
+                    data = response.json()
+                    
+                    formats = [
+                        {'format_id': 'best', 'resolution': 'Best Quality', 'ext': 'mp4', 'filesize': 0, 'has_audio': True},
+                        {'format_id': '720p', 'resolution': '720p', 'ext': 'mp4', 'filesize': 0, 'has_audio': True},
+                        {'format_id': '480p', 'resolution': '480p', 'ext': 'mp4', 'filesize': 0, 'has_audio': True},
+                        {'format_id': '360p', 'resolution': '360p', 'ext': 'mp4', 'filesize': 0, 'has_audio': True},
+                        {'format_id': 'audio', 'resolution': 'Audio MP3', 'ext': 'mp3', 'filesize': 0, 'has_audio': True},
+                    ]
+                    
+                    return {
+                        'success': True,
+                        'data': {
+                            'title': data.get('title', 'Unknown'),
+                            'duration': self._format_duration(data.get('lengthSeconds', 0)),
+                            'thumbnail': f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg",
+                            'uploader': data.get('author', 'Unknown'),
+                            'formats': formats,
+                        }
+                    }
+            except:
+                continue
+        
+        # Fallback to oEmbed (always works for info)
         try:
-            video_id = self._extract_id(url)
-            
-            # Use oEmbed API (never blocked)
-            import requests
             oembed_url = f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={video_id}&format=json"
             oembed_data = requests.get(oembed_url, timeout=10).json()
             
@@ -36,89 +73,103 @@ class YouTubeService(BaseDownloader):
                 }
             }
         except Exception as e:
-            raise Exception(f"Failed to fetch video: {str(e)}")
-    
-    def _extract_id(self, url: str) -> str:
-        import re
-        patterns = [
-            r'(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/|youtube\.com/shorts/)([a-zA-Z0-9_-]+)',
-        ]
-        for pattern in patterns:
-            match = re.search(pattern, url)
-            if match:
-                return match.group(1)
-        return ""
+            raise Exception(f"Failed to fetch video info: {str(e)}")
     
     def download(self, url: str, quality: str = 'best') -> dict:
-        """Download using yt-dlp with multiple fallback methods"""
+        """Download using free API"""
+        video_id = self._extract_id(url)
+        if not video_id:
+            raise Exception("Invalid YouTube URL")
+        
         download_id = str(int(time.time()))
         is_audio = (quality == 'audio')
         
-        # Try different methods in order
-        methods = [
-            self._download_android,
-            self._download_ios,
-            self._download_web,
-        ]
-        
-        last_error = None
-        for method in methods:
+        # Try downloading via Invidious API
+        for api_url in self.API_ENDPOINTS:
             try:
-                return method(url, download_id, is_audio, quality)
-            except Exception as e:
-                last_error = str(e)
+                response = requests.get(f"{api_url}{video_id}", timeout=10)
+                if response.status_code == 200:
+                    data = response.json()
+                    
+                    # Get download URL from Invidious
+                    download_url = None
+                    
+                    if is_audio:
+                        # Get audio stream
+                        for fmt in data.get('adaptiveFormats', []):
+                            if 'audio' in fmt.get('type', ''):
+                                download_url = fmt.get('url')
+                                break
+                    else:
+                        # Get video+audio combined
+                        for fmt in data.get('formatStreams', []):
+                            download_url = fmt.get('url')
+                            if download_url:
+                                break
+                    
+                    if download_url:
+                        return self._download_from_url(download_url, download_id, is_audio, data.get('title', 'video'))
+            except:
                 continue
         
-        raise Exception(f"All download methods failed. Last error: {last_error}")
+        # Last resort: try yt-dlp with cookies workaround
+        try:
+            return self._download_ytdlp_fallback(url, download_id, is_audio)
+        except Exception as e:
+            raise Exception(f"Download failed. YouTube is blocking server downloads. Try using a VPN or local installation. Error: {str(e)}")
     
-    def _download_android(self, url, download_id, is_audio, quality):
-        """Try Android client"""
+    def _download_from_url(self, url: str, download_id: str, is_audio: bool, title: str) -> dict:
+        """Download from direct URL"""
+        import requests
+        
+        ext = 'mp3' if is_audio else 'mp4'
+        safe_title = self.sanitize_filename(title)
+        filename = f"{safe_title}.{ext}"
+        filepath = self.download_dir / filename
+        
+        # Download the file
+        response = requests.get(url, stream=True, timeout=300)
+        response.raise_for_status()
+        
+        total_size = int(response.headers.get('content-length', 0))
+        
+        with open(filepath, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+        
+        file_size = os.path.getsize(filepath)
+        size_mb = file_size / (1024 * 1024)
+        
+        return {
+            'success': True,
+            'data': {
+                'title': safe_title,
+                'filename': filename,
+                'filesize': f"{size_mb:.1f} MB",
+            }
+        }
+    
+    def _download_ytdlp_fallback(self, url: str, download_id: str, is_audio: bool) -> dict:
+        """Fallback using yt-dlp"""
+        format_str = 'bestaudio/best' if is_audio else 'best[height<=360]/best'
+        
         ydl_opts = {
-            'format': 'bestaudio/best' if is_audio else 'best[height<=720]/best',
+            'format': format_str,
             'noplaylist': True,
             'outtmpl': str(self.download_dir / f'%(title)s_{download_id}.%(ext)s'),
             'quiet': True,
             'no_warnings': True,
-            'extractor_args': {'youtube': {'player_client': ['android']}},
-            'http_headers': {'User-Agent': 'com.google.android.youtube/19.09.37 (Linux; U; Android 13)'},
+            'extractor_args': {'youtube': {'player_client': ['android_vr']}},
+            'http_headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'},
             'merge_output_format': 'mp4',
+            'age_limit': 99,
         }
-        return self._do_download(url, download_id, is_audio, ydl_opts)
-    
-    def _download_ios(self, url, download_id, is_audio, quality):
-        """Try iOS client"""
-        ydl_opts = {
-            'format': 'bestaudio/best' if is_audio else 'best[height<=720]/best',
-            'noplaylist': True,
-            'outtmpl': str(self.download_dir / f'%(title)s_{download_id}.%(ext)s'),
-            'quiet': True,
-            'no_warnings': True,
-            'extractor_args': {'youtube': {'player_client': ['ios']}},
-            'http_headers': {'User-Agent': 'com.apple.mobilesafari/16.0 (iPhone; U; CPU iPhone OS 16_0 like Mac OS X)'},
-            'merge_output_format': 'mp4',
-        }
-        return self._do_download(url, download_id, is_audio, ydl_opts)
-    
-    def _download_web(self, url, download_id, is_audio, quality):
-        """Try web client"""
-        ydl_opts = {
-            'format': 'bestaudio/best' if is_audio else 'best[height<=720]/best',
-            'noplaylist': True,
-            'outtmpl': str(self.download_dir / f'%(title)s_{download_id}.%(ext)s'),
-            'quiet': True,
-            'no_warnings': True,
-            'http_headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'},
-            'merge_output_format': 'mp4',
-        }
-        return self._do_download(url, download_id, is_audio, ydl_opts)
-    
-    def _do_download(self, url, download_id, is_audio, ydl_opts):
-        """Execute the download"""
+        
         if is_audio:
             ydl_opts['postprocessors'] = [{
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',
-                'preferredquality': '192',
+                'preferredquality': '128',
             }]
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -149,4 +200,26 @@ class YouTubeService(BaseDownloader):
                 }
             }
         
-        raise Exception("File not found after download")
+        raise Exception("File not found")
+    
+    def _extract_id(self, url: str) -> str:
+        import re
+        patterns = [
+            r'(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/|youtube\.com/shorts/)([a-zA-Z0-9_-]+)',
+        ]
+        for pattern in patterns:
+            match = re.search(pattern, url)
+            if match:
+                return match.group(1)
+        return ""
+    
+    def _format_duration(self, seconds) -> str:
+        if not seconds:
+            return "Unknown"
+        seconds = int(seconds)
+        hours = seconds // 3600
+        minutes = (seconds % 3600) // 60
+        secs = seconds % 60
+        if hours > 0:
+            return f"{hours}:{minutes:02d}:{secs:02d}"
+        return f"{minutes}:{secs:02d}"
