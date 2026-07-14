@@ -19,16 +19,20 @@ class BaseDownloader:
             'ffmpeg_location': FFMPEG_PATH,
         }
     
-    def find_downloaded_file(self, download_id: str):
-        filepath = None
-        for f in self.download_dir.glob(f"*{download_id}*"):
-            filepath = f
-            break
-        
-        if not filepath:
-            all_files = sorted(self.download_dir.glob("*"), key=lambda x: x.stat().st_mtime, reverse=True)
-            for f in all_files:
-                if f.is_file():
-                    filepath = f
-                    break
-        return filepath
+def find_downloaded_file(self, download_id: str):
+    """Find the downloaded file"""
+    import glob
+    
+    # Try exact match first
+    for f in self.download_dir.glob(f"*{download_id}*"):
+        if f.is_file():
+            return f
+    
+    # Fallback: get most recent file
+    all_files = sorted(
+        [f for f in self.download_dir.glob("*") if f.is_file()],
+        key=lambda x: x.stat().st_mtime,
+        reverse=True
+    )
+    
+    return all_files[0] if all_files else None
