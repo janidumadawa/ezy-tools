@@ -4,7 +4,8 @@ import { useState } from 'react'
 import axios from 'axios'
 import { Download, Loader2, CheckCircle, AlertCircle, Video, Music, Clock, User } from 'lucide-react'
 
-const API_URL = 'http://localhost:8000/api/facebook'
+// const API_URL = 'http://localhost:8000/api/facebook'
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/facebook`
 
 interface VideoInfo {
     title: string
@@ -69,7 +70,9 @@ export default function FacebookPage() {
 
             if (response.data.success) {
                 const filename = response.data.data.filename
-                const downloadUrl = `http://localhost:8000/api/facebook/file/${filename}`
+                // const downloadUrl = `http://localhost:8000/api/facebook/file/${filename}`
+                const downloadUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/facebook/file/${filename}`
+
                 window.open(downloadUrl, '_blank')
                 setDownloadComplete(true)
 

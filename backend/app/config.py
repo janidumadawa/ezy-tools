@@ -5,7 +5,11 @@ import os
 DOWNLOADS_DIR = Path.home() / "Downloads" / "YouTubeDownloads"
 DOWNLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
-CORS_ORIGINS = ["http://localhost:3000"]
+CORS_ORIGINS = [
+    "http://localhost:3000",
+    "https://ezy-tools.vercel.app",  # Your Vercel domain
+    "https://*.vercel.app",
+]
 
 FFMPEG_PATH = None
 try:

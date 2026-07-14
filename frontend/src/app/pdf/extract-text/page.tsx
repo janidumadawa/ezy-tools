@@ -5,7 +5,8 @@ import Link from 'next/link'
 import axios from 'axios'
 import { Upload, Download, Loader2, FileText, CheckCircle, Copy, Eye } from 'lucide-react'
 
-const API_URL = 'http://localhost:8000/api/pdf'
+// const API_URL = 'http://localhost:8000/api/pdf'
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/pdf`
 
 export default function ExtractTextPage() {
   const [file, setFile] = useState<File | null>(null)

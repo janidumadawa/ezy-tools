@@ -5,7 +5,8 @@ import Link from 'next/link'
 import axios from 'axios'
 import { Download, Loader2, CheckCircle, AlertCircle, Music2, Play } from 'lucide-react'
 
-const API_URL = 'http://localhost:8000/api/tiktok'
+// const API_URL = 'http://localhost:8000/api/tiktok'
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/tiktok`
 
 interface VideoInfo {
   title: string
@@ -60,7 +61,8 @@ export default function TikTokPage() {
 
       if (response.data.success) {
         const filename = response.data.data.filename
-        const downloadUrl = `http://localhost:8000/api/tiktok/file/${filename}`
+        // const downloadUrl = `http://localhost:8000/api/tiktok/file/${filename}`
+        const downloadUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/tiktok/file/${filename}`
         window.open(downloadUrl, '_blank')
         setDownloadComplete(true)
         setTimeout(() => setDownloadComplete(false), 5000)

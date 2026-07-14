@@ -5,7 +5,9 @@ import axios from 'axios'
 import { Download, Loader2, CheckCircle, AlertCircle, Camera, Play, Link } from 'lucide-react'
 import Image from "next/image";
 
-const API_URL = 'http://localhost:8000/api/instagram'
+// const API_URL = 'http://localhost:8000/api/instagram'
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/instagram`
+
 
 export default function InstagramPage() {
   const [url, setUrl] = useState('')
@@ -53,7 +55,9 @@ export default function InstagramPage() {
       })
 
       if (response.data.success) {
-        const downloadUrl = `http://localhost:8000/api/instagram/file/${response.data.data.filename}`
+        // const downloadUrl = `http://localhost:8000/api/instagram/file/${response.data.data.filename}`
+        const downloadUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/instagram/file/${response.data.data.filename}`
+
         window.open(downloadUrl, '_blank')
         setDownloadComplete(true)
         

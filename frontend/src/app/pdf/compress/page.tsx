@@ -5,7 +5,9 @@ import Link from 'next/link'
 import axios from 'axios'
 import { Upload, Download, Loader2, FileText, CheckCircle, Shrink } from 'lucide-react'
 
-const API_URL = 'http://localhost:8000/api/pdf'
+// const API_URL = 'http://localhost:8000/api/pdf'
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/pdf`
+
 
 export default function CompressPDFPage() {
   const [file, setFile] = useState<File | null>(null)
@@ -75,7 +77,7 @@ export default function CompressPDFPage() {
             <CheckCircle className="w-5 h-5 text-green-500" />
             <span className="font-medium text-green-700">Compressed! ({result.compressed_size})</span>
           </div>
-          <a href={`http://localhost:8000/api/pdf/file/${result.filename}`} download className="w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium flex items-center justify-center gap-2">
+          <a href={`${process.env.NEXT_PUBLIC_API_URL}/api/pdf/file/${result.filename}`} download className="w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium flex items-center justify-center gap-2">
             <Download className="w-4 h-4" /> Download Compressed PDF
           </a>
         </div>

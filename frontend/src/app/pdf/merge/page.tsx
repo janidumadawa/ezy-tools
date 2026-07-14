@@ -5,7 +5,8 @@ import Link from 'next/link'
 import axios from 'axios'
 import { Upload, Download, Loader2, X, FileText, CheckCircle, Layers, GripVertical, ChevronUp, ChevronDown } from 'lucide-react'
 
-const API_URL = 'http://localhost:8000/api/pdf'
+// const API_URL = 'http://localhost:8000/api/pdf'
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/pdf`
 
 interface PDFFile {
   file: File
@@ -98,7 +99,8 @@ export default function MergePDFPage() {
       })
 
       if (response.data.success) {
-        setDownloadUrl(`http://localhost:8000/api/pdf/file/${response.data.data.filename}`)
+        // setDownloadUrl(`http://localhost:8000/api/pdf/file/${response.data.data.filename}`)
+        setDownloadUrl(`${process.env.NEXT_PUBLIC_API_URL}/api/pdf/file/${response.data.data.filename}`)
       }
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to merge PDFs')

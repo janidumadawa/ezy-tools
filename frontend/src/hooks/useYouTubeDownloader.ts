@@ -4,7 +4,8 @@ import { useState } from 'react'
 import axios from 'axios'
 import { VideoInfo, DownloadState } from '@/src/types'
 
-const API_URL = 'http://localhost:8000/api/youtube'
+// const API_URL = 'http://localhost:8000/api/youtube'
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/youtube`
 
 export function useYouTubeDownloader() {
   const [url, setUrl] = useState('')
@@ -86,7 +87,9 @@ export function useYouTubeDownloader() {
 
       if (response.data.success) {
         const filename = response.data.data.filename
-        const downloadUrl = `http://localhost:8000/api/youtube/file/${filename}`
+        // const downloadUrl = `http://localhost:8000/api/youtube/file/${filename}`
+        const downloadUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/youtube/file/${filename}`
+
         
         setDownloadState({ 
           status: 'completed', 
