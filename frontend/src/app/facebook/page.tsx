@@ -55,36 +55,41 @@ export default function FacebookPage() {
         }
     }
 
-    const downloadVideo = async () => {
-        if (!videoInfo) return
+ const downloadVideo = async () => {
+    if (!videoInfo) return
 
-        setDownloading(true)
-        setDownloadComplete(false)
-        setError('')
+    setDownloading(true)
+    setDownloadComplete(false)
+    setError('')
 
-        try {
-            const response = await axios.post(`${API_URL}/download`, {
-                url,
-                quality: selectedQuality
-            })
+    try {
+        const response = await axios.post(`${API_URL}/download`, {
+            url,
+            quality: selectedQuality
+        })
 
-            if (response.data.success) {
-                const filename = response.data.data.filename
-                // const downloadUrl = `http://localhost:8000/api/facebook/file/${filename}`
-                const downloadUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/facebook/file/${filename}`
-
-                window.open(downloadUrl, '_blank')
-                setDownloadComplete(true)
-
-                setTimeout(() => setDownloadComplete(false), 5000)
-            }
-        } catch (err: any) {
-            setError(err.response?.data?.detail || 'Download failed')
-        } finally {
-            setDownloading(false)
+        if (response.data.success) {
+            const filename = response.data.data.filename
+            const downloadUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/facebook/file/${filename}`
+            
+            // Create a hidden link and click it (works better than window.open)
+            const link = document.createElement('a')
+            link.href = downloadUrl
+            link.download = filename
+            link.target = '_blank'
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            
+            setDownloadComplete(true)
+            setTimeout(() => setDownloadComplete(false), 5000)
         }
+    } catch (err: any) {
+        setError(err.response?.data?.detail || 'Download failed')
+    } finally {
+        setDownloading(false)
     }
-
+}
     const formatFileSize = (bytes: number) => {
         if (bytes === 0) return 'Unknown'
         const sizes = ['B', 'KB', 'MB', 'GB']
