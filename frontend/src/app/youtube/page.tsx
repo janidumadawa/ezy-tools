@@ -26,15 +26,8 @@ export default function YouTubePage() {
   return (
     <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-10 lg:py-12 relative overflow-hidden">
       {/* Background YouTube Logo Watermark - hidden on mobile */}
-      <div className="hidden lg:block absolute top-10 right-[-120px] pointer-events-none -z-10">
-        <img
-          src="/logos/youtube.png"
-          alt=""
-          className="w-[300px] lg:w-[500px] h-[300px] lg:h-[500px] object-contain opacity-[0.04] blur-sm"
-        />
-      </div>
 
-      <div className="hidden lg:block absolute top-40 left-[10px] pointer-events-none -z-10">
+      <div className="hidden lg:block absolute top-30 left-[10px] pointer-events-none -z-10">
         <img
           src="/logos/youtube.png"
           alt=""
