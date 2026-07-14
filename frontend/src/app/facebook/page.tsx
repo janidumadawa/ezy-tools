@@ -55,7 +55,7 @@ export default function FacebookPage() {
         }
     }
 
- const downloadVideo = async () => {
+const downloadVideo = async () => {
     if (!videoInfo) return
 
     setDownloading(true)
@@ -63,6 +63,7 @@ export default function FacebookPage() {
     setError('')
 
     try {
+        // First, trigger the download on server
         const response = await axios.post(`${API_URL}/download`, {
             url,
             quality: selectedQuality
@@ -70,16 +71,21 @@ export default function FacebookPage() {
 
         if (response.data.success) {
             const filename = response.data.data.filename
-            const downloadUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/facebook/file/${filename}`
+            const fileUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/facebook/file/${filename}`
             
-            // Create a hidden link and click it (works better than window.open)
+            // Fetch the file as blob
+            const fileResponse = await fetch(fileUrl)
+            const blob = await fileResponse.blob()
+            
+            // Create download link
+            const url = window.URL.createObjectURL(blob)
             const link = document.createElement('a')
-            link.href = downloadUrl
+            link.href = url
             link.download = filename
-            link.target = '_blank'
             document.body.appendChild(link)
             link.click()
             document.body.removeChild(link)
+            window.URL.revokeObjectURL(url)
             
             setDownloadComplete(true)
             setTimeout(() => setDownloadComplete(false), 5000)

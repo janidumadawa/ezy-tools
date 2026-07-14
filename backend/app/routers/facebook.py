@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException, Request
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from ..services.facebook_service import FacebookService
 from ..config import DOWNLOADS_DIR
+import os
 
 router = APIRouter(prefix="/api/facebook", tags=["facebook"])
 service = FacebookService()
@@ -16,7 +17,7 @@ async def get_video_info(url: str):
 
 @router.post("/download")
 async def download_video(request: Request):
-    """Download Facebook video"""
+    """Download Facebook video - returns file info"""
     try:
         data = await request.json()
         result = service.download(
@@ -32,12 +33,29 @@ async def download_video(request: Request):
 
 @router.get("/file/{filename}")
 async def get_file(filename: str):
-    """Download file"""
+    """Stream file to browser"""
     filepath = DOWNLOADS_DIR / filename
-    if filepath.exists():
-        return FileResponse(
-            path=str(filepath),
-            filename=filename,
-            media_type='application/octet-stream'
-        )
-    raise HTTPException(status_code=404, detail="File not found")
+    
+    if not filepath.exists():
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    # Get file size
+    file_size = os.path.getsize(filepath)
+    
+    # Determine media type
+    if filename.endswith('.mp3'):
+        media_type = 'audio/mpeg'
+    else:
+        media_type = 'video/mp4'
+    
+    # Return file with proper headers
+    return FileResponse(
+        path=str(filepath),
+        filename=filename,
+        media_type=media_type,
+        headers={
+            'Content-Disposition': f'attachment; filename="{filename}"',
+            'Content-Length': str(file_size),
+            'Access-Control-Expose-Headers': 'Content-Disposition',
+        }
+    )
