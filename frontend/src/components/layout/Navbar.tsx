@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Wrench, Home, Info, ChevronDown, LucideIcon } from 'lucide-react'
+import { Menu, X, Wrench, Home, Info, ChevronDown, LucideIcon, FileText, FileSpreadsheet, Presentation, ImageIcon, Images, RefreshCw } from 'lucide-react'
 
 // Add type for dropdown items
 type DropdownItem = {
@@ -38,19 +38,24 @@ const navigation = [
         ]
       },
       {
+        category: 'File Converters',
+        items: [
+          { name: 'Word to PDF', href: '/converters/word-to-pdf', icon: null, iconComponent: FileText, description: '.docx → .pdf' } as DropdownItem,
+          { name: 'PDF to Word', href: '/converters/pdf-to-word', icon: null, iconComponent: FileText, description: '.pdf → .docx' } as DropdownItem,
+          { name: 'Excel to PDF', href: '/converters/excel-to-pdf', icon: null, iconComponent: FileSpreadsheet, description: '.xlsx → .pdf' } as DropdownItem,
+          { name: 'PPTX to PDF', href: '/converters/pptx-to-pdf', icon: null, iconComponent: Presentation, description: '.pptx → .pdf' } as DropdownItem,
+          { name: 'Image to PDF', href: '/converters/image-to-pdf', icon: null, iconComponent: ImageIcon, description: 'Images → .pdf' } as DropdownItem,
+          { name: 'CSV to PDF', href: '/converters/csv-to-pdf', icon: null, iconComponent: FileText, description: '.csv → .pdf' } as DropdownItem,
+          { name: 'Text to PDF', href: '/converters/text-to-pdf', icon: null, iconComponent: FileText, description: '.txt → .pdf' } as DropdownItem,
+        ]
+      },
+      {
         category: 'PDF Tools',
         items: [
           { name: 'Merge PDF', href: '/pdf/merge', icon: '/logos/pdf.png', description: 'Combine PDFs' } as DropdownItem,
           { name: 'Split PDF', href: '/pdf/split', icon: '/logos/pdf.png', description: 'Extract pages' } as DropdownItem,
           { name: 'Compress PDF', href: '/pdf/compress', icon: '/logos/pdf.png', description: 'Reduce file size' } as DropdownItem,
           { name: 'Extract Text', href: '/pdf/extract-text', icon: '/logos/pdf.png', description: 'Get text from PDF' } as DropdownItem,
-        ]
-      },
-      {
-        category: 'Coming Soon',
-        items: [
-          { name: 'Image Tools', href: '#', icon: null, iconComponent: Wrench, description: 'Convert & compress images' } as DropdownItem,
-          { name: 'File Converters', href: '#', icon: null, iconComponent: Wrench, description: 'Format conversion' } as DropdownItem,
         ]
       },
     ]
@@ -159,15 +164,6 @@ export default function Navbar() {
                           </div>
                         </div>
                       ))}
-                    </div>
-
-                    <div className="border-t border-gray-100 bg-gray-50 px-4 py-2.5">
-                      <Link
-                        href="/all-tools/social-media"
-                        className="text-xs text-purple-600 hover:text-purple-700 font-medium flex items-center justify-center gap-1"
-                      >
-                        View All Tools →
-                      </Link>
                     </div>
                   </div>
                 )}

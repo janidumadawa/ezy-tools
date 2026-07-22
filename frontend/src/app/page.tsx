@@ -85,6 +85,61 @@ const categories: Category[] = [
     ]
   },
   {
+    name: 'File Converters',
+    sinhala: '',
+    icon: RefreshCw,
+    tools: [
+      {
+        name: 'Word to PDF',
+        sinhala: 'Word PDF බවට',
+        description: 'Convert Word documents to PDF',
+        sinhalaDescription: 'Word documents PDF බවට පරිවර්තනය කරන්න.',
+        href: '/converters/word-to-pdf',
+        icon: null,
+        IconComponent: FileText,
+        color: 'blue',
+        borderColor: 'hover:border-blue-300',
+        shadowColor: 'hover:shadow-blue-100',
+        bgColor: 'bg-blue-50',
+        hoverBg: 'group-hover:bg-blue-100',
+        textColor: 'text-blue-600',
+        features: ['Free', 'Fast', 'Online'],
+      },
+      {
+        name: 'PDF to Word',
+        sinhala: 'PDF Word බවට',
+        description: 'Convert PDF files to Word documents',
+        sinhalaDescription: 'PDF files Word documents බවට පරිවර්තනය කරන්න.',
+        href: '/converters/pdf-to-word',
+        icon: null,
+        IconComponent: FileText,
+        color: 'green',
+        borderColor: 'hover:border-green-300',
+        shadowColor: 'hover:shadow-green-100',
+        bgColor: 'bg-green-50',
+        hoverBg: 'group-hover:bg-green-100',
+        textColor: 'text-green-600',
+        features: ['Free', 'Fast', 'Online'],
+      },
+      {
+        name: 'PPTX to PDF',
+        sinhala: 'PPTX PDF බවට',
+        description: 'Convert PowerPoint presentations to PDF',
+        sinhalaDescription: 'PowerPoint presentations PDF බවට පරිවර්තනය කරන්න.',
+        href: '/converters/pptx-to-pdf',
+        icon: null,
+        IconComponent: FileText,
+        color: 'orange',
+        borderColor: 'hover:border-orange-300',
+        shadowColor: 'hover:shadow-orange-100',
+        bgColor: 'bg-orange-50',
+        hoverBg: 'group-hover:bg-orange-100',
+        textColor: 'text-orange-600',
+        features: ['Free', 'Fast', 'Online'],
+      }
+    ]
+  },
+  {
     name: 'Document Tools',
     sinhala: '',
     icon: FileText,
@@ -104,39 +159,7 @@ const categories: Category[] = [
         hoverBg: 'group-hover:bg-orange-100',
         textColor: 'text-orange-600',
         features: ['Merge', 'Split', 'Compress'],
-      },
-      {
-        name: 'Image Tools',
-        sinhala: 'පින්තූර මෙවලම්',
-        description: 'Compress, resize, and convert images',
-        sinhalaDescription: 'පින්තූර compress, resize සහ convert කරන්න.',
-        href: '#',
-        icon: null,
-        IconComponent: ImageIcon,
-        color: 'green',
-        borderColor: 'hover:border-green-300',
-        shadowColor: 'hover:shadow-green-100',
-        bgColor: 'bg-green-50',
-        hoverBg: 'group-hover:bg-green-100',
-        textColor: 'text-green-600',
-        features: ['Coming Soon'],
-      },
-      {
-        name: 'File Converter',
-        sinhala: 'File Converter',
-        description: 'Convert between different file formats',
-        sinhalaDescription: 'විවිධ file formats අතර convert කරන්න.',
-        href: '#',
-        icon: null,
-        IconComponent: RefreshCw,
-        color: 'purple',
-        borderColor: 'hover:border-purple-300',
-        shadowColor: 'hover:shadow-purple-100',
-        bgColor: 'bg-purple-50',
-        hoverBg: 'group-hover:bg-purple-100',
-        textColor: 'text-purple-600',
-        features: ['Coming Soon'],
-      },
+      }
     ]
   },
 ]
@@ -192,11 +215,12 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            
-            {/* See All link in header */}
-            {catIndex === 0 && (
+
+
+            {/* See All link in header - for Social Media (index 0) and File Converters (index 1) */}
+            {(catIndex === 0 || catIndex === 1) && (
               <Link
-                href="/all-tools/social-media"
+                href={catIndex === 0 ? "/all-tools/social-media" : "/all-tools/converters"}
                 className="hidden sm:inline-flex items-center gap-1 text-sm text-purple-600 hover:text-purple-700 font-medium"
               >
                 See All
@@ -285,13 +309,13 @@ export default function Home() {
           </div>
 
           {/* See All Button - Mobile */}
-          {catIndex === 0 && (
+          {(catIndex === 0 || catIndex === 1) && (
             <div className="text-center mt-4 sm:mt-5">
               <Link
-                href="/all-tools/social-media"
+                href={catIndex === 0 ? "/all-tools/social-media" : "/all-tools/converters"}
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-purple-50 text-purple-700 hover:bg-purple-100 rounded-lg text-sm font-medium transition-colors sm:hidden"
               >
-                See All Social Media Tools
+                See All {catIndex === 0 ? 'Social Media' : 'File Converter'} Tools
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
