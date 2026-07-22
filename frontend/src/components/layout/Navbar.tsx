@@ -3,7 +3,16 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Play, Wrench, Home, Info, ChevronDown, Camera, FileText, Download, Music2 } from 'lucide-react'
+import { Menu, X, Wrench, Home, Info, ChevronDown, LucideIcon } from 'lucide-react'
+
+// Add type for dropdown items
+type DropdownItem = {
+  name: string
+  href: string
+  icon: string | null
+  iconComponent?: LucideIcon
+  description: string
+}
 
 const navigation = [
   {
@@ -19,26 +28,29 @@ const navigation = [
       {
         category: 'Social Media Downloaders',
         items: [
-          { name: 'YouTube Downloader', href: '/youtube', icon: Play, description: 'Videos & MP3 audio' },
-          { name: 'Facebook Downloader', href: '/facebook', icon: Download, description: 'Reels & Videos' },
-          { name: 'TikTok Downloader', href: '/tiktok', icon: Music2, description: 'No watermark videos' },
-          { name: 'Instagram Downloader', href: '/instagram', icon: Camera, description: 'Reels & Photos' },
+          { name: 'Facebook Downloader', href: '/facebook', icon: '/logos/facebook.png', description: 'Reels & Videos' } as DropdownItem,
+          { name: 'TikTok Downloader', href: '/tiktok', icon: '/logos/tik-tok.png', description: 'No watermark videos' } as DropdownItem,
+          { name: 'Twitter Downloader', href: '/twitter', icon: '/logos/x.png', description: 'Videos & GIFs' } as DropdownItem,
+          { name: 'Pinterest Downloader', href: '/pinterest', icon: '/logos/pinterest-logo.png', description: 'Videos & Images' } as DropdownItem,
+          { name: 'Reddit Downloader', href: '/reddit', icon: '/logos/reddit.png', description: 'Videos with audio' } as DropdownItem,
+          { name: 'YouTube Downloader', href: '/youtube', icon: '/logos/youtube.png', description: 'Videos & MP3 audio' } as DropdownItem,
+          { name: 'Instagram Downloader', href: '/instagram', icon: '/logos/instagram.png', description: 'Reels & Photos' } as DropdownItem,
         ]
       },
       {
         category: 'PDF Tools',
         items: [
-          { name: 'Merge PDF', href: '/pdf/merge', icon: FileText, description: 'Combine PDFs' },
-          { name: 'Split PDF', href: '/pdf/split', icon: FileText, description: 'Extract pages' },
-          { name: 'Compress PDF', href: '/pdf/compress', icon: FileText, description: 'Reduce file size' },
-          { name: 'Extract Text', href: '/pdf/extract-text', icon: FileText, description: 'Get text from PDF' },
+          { name: 'Merge PDF', href: '/pdf/merge', icon: '/logos/pdf.png', description: 'Combine PDFs' } as DropdownItem,
+          { name: 'Split PDF', href: '/pdf/split', icon: '/logos/pdf.png', description: 'Extract pages' } as DropdownItem,
+          { name: 'Compress PDF', href: '/pdf/compress', icon: '/logos/pdf.png', description: 'Reduce file size' } as DropdownItem,
+          { name: 'Extract Text', href: '/pdf/extract-text', icon: '/logos/pdf.png', description: 'Get text from PDF' } as DropdownItem,
         ]
       },
       {
         category: 'Coming Soon',
         items: [
-          { name: 'Image Tools', href: '#', icon: Wrench, description: 'Convert & compress images' },
-          { name: 'File Converters', href: '#', icon: Wrench, description: 'Format conversion' },
+          { name: 'Image Tools', href: '#', icon: null, iconComponent: Wrench, description: 'Convert & compress images' } as DropdownItem,
+          { name: 'File Converters', href: '#', icon: null, iconComponent: Wrench, description: 'Format conversion' } as DropdownItem,
         ]
       },
     ]
@@ -113,15 +125,13 @@ export default function Navbar() {
                     <div className="p-4 grid grid-cols-2 gap-4">
                       {item.dropdown.map((category, catIndex) => (
                         <div key={catIndex} className={catIndex === item.dropdown.length - 1 ? 'col-span-2' : ''}>
-                          {/* Category Title */}
                           <div className="flex items-center gap-2 mb-2 px-2">
                             <div className="w-1 h-4 bg-purple-500 rounded-full"></div>
                             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                               {category.category}
                             </h3>
                           </div>
-                          
-                          {/* Category Items */}
+
                           <div className={`grid gap-1 ${catIndex === item.dropdown.length - 1 ? 'grid-cols-2' : ''}`}>
                             {category.items.map((subItem) => (
                               <Link
@@ -134,9 +144,11 @@ export default function Navbar() {
                                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
                                   isActive(subItem.href) ? 'bg-purple-100' : 'bg-gray-100'
                                 }`}>
-                                  <subItem.icon className={`w-4 h-4 ${
-                                    isActive(subItem.href) ? 'text-purple-600' : 'text-gray-500'
-                                  }`} />
+                                  {subItem.icon ? (
+                                    <img src={subItem.icon} alt="" className="w-5 h-5 object-contain" />
+                                  ) : subItem.iconComponent ? (
+                                    <subItem.iconComponent className="w-4 h-4 text-gray-500" />
+                                  ) : null}
                                 </div>
                                 <div>
                                   <p className="text-sm font-medium text-gray-900">{subItem.name}</p>
@@ -149,10 +161,9 @@ export default function Navbar() {
                       ))}
                     </div>
 
-                    {/* Footer */}
                     <div className="border-t border-gray-100 bg-gray-50 px-4 py-2.5">
                       <Link
-                        href="/tools"
+                        href="/all-tools/social-media"
                         className="text-xs text-purple-600 hover:text-purple-700 font-medium flex items-center justify-center gap-1"
                       >
                         View All Tools →
@@ -203,7 +214,13 @@ export default function Navbar() {
                             }`}
                             onClick={() => setMobileMenuOpen(false)}
                           >
-                            <subItem.icon className="w-4 h-4" />
+                            <div className="w-6 h-6 flex items-center justify-center flex-shrink-0">
+                              {subItem.icon ? (
+                                <img src={subItem.icon} alt="" className="w-5 h-5 object-contain" />
+                              ) : subItem.iconComponent ? (
+                                <subItem.iconComponent className="w-4 h-4" />
+                              ) : null}
+                            </div>
                             <div>
                               <p className="font-medium">{subItem.name}</p>
                               <p className="text-xs text-gray-400">{subItem.description}</p>
