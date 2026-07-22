@@ -4,18 +4,7 @@ import Link from 'next/link'
 import { ArrowLeft, FileText, FileSpreadsheet, Presentation, ImageIcon, Images, AlertTriangle } from 'lucide-react'
 
 const converterTools = [
-  {
-    name: 'Word to PDF',
-    description: 'Convert Word documents (.docx) to PDF format instantly',
-    href: '/converters/word-to-pdf',
-    icon: FileText,
-    color: 'blue',
-    bgColor: 'bg-blue-50',
-    textColor: 'text-blue-600',
-    borderColor: 'border-blue-200',
-    tag: '.docx → .pdf',
-    status: 'local',
-  },
+
   {
     name: 'PDF to Word',
     description: 'Convert PDF files to editable Word documents',
@@ -39,18 +28,6 @@ const converterTools = [
     borderColor: 'border-emerald-200',
     tag: '.xlsx → .pdf',
     status: 'active',
-  },
-  {
-    name: 'PowerPoint to PDF',
-    description: 'Convert PowerPoint presentations to PDF',
-    href: '/converters/pptx-to-pdf',
-    icon: Presentation,
-    color: 'orange',
-    bgColor: 'bg-orange-50',
-    textColor: 'text-orange-600',
-    borderColor: 'border-orange-200',
-    tag: '.pptx → .pdf',
-    status: 'local',
   },
   {
     name: 'Image to PDF',
@@ -99,6 +76,31 @@ const converterTools = [
     borderColor: 'border-gray-200',
     tag: '.txt → .pdf',
     status: 'active',
+  },
+
+    {
+    name: 'Word to PDF',
+    description: 'Convert Word documents (.docx) to PDF format instantly',
+    href: '/converters/word-to-pdf',
+    icon: FileText,
+    color: 'blue',
+    bgColor: 'bg-blue-50',
+    textColor: 'text-blue-600',
+    borderColor: 'border-blue-200',
+    tag: '.docx → .pdf',
+    status: 'local',
+  },
+    {
+    name: 'PowerPoint to PDF',
+    description: 'Convert PowerPoint presentations to PDF',
+    href: '/converters/pptx-to-pdf',
+    icon: Presentation,
+    color: 'orange',
+    bgColor: 'bg-orange-50',
+    textColor: 'text-orange-600',
+    borderColor: 'border-orange-200',
+    tag: '.pptx → .pdf',
+    status: 'local',
   },
 ]
 

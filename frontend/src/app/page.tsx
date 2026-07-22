@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight } from 'lucide-react'
+import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images } from 'lucide-react'
 
 // Add unavailable tools list
 const unavailableTools = ['YouTube Downloader', 'Instagram Downloader']
@@ -105,23 +105,7 @@ const categories: Category[] = [
         textColor: 'text-green-600',
         features: [],
       },
-      {
-        name: 'PPTX to PDF',
-        sinhala: 'PPTX PDF බවට',
-        description: 'Convert PowerPoint presentations to PDF',
-        sinhalaDescription: 'PowerPoint presentations PDF බවට පරිවර්තනය කරන්න.',
-        href: '/converters/pptx-to-pdf',
-        icon: null,
-        IconComponent: FileText,
-        color: 'orange',
-        borderColor: 'hover:border-orange-300',
-        shadowColor: 'hover:shadow-orange-100',
-        bgColor: 'bg-orange-50',
-        hoverBg: 'group-hover:bg-orange-100',
-        textColor: 'text-orange-600',
-        features: [],
-      }
-      ,
+
       {
         name: 'Image to PDF',
         sinhala: 'Imagers PDF බවට',
@@ -137,6 +121,22 @@ const categories: Category[] = [
         hoverBg: 'group-hover:bg-indigo-100',
         textColor: 'text-indigo-600',
         features: [],
+      },
+      {
+        name: 'Images to PDF',
+        sinhala: 'Images PDF බවට',
+        description: 'Combine multiple images into a single PDF file',
+        sinhalaDescription: 'images කිහිපයක් PDF file එකක් බවට convert කරන්න.',
+        href: '/converters/images-to-pdf',
+        icon: null,
+        IconComponent: Images,
+        color: 'violet',
+        borderColor: 'hover:border-violet-300',
+        shadowColor: 'hover:shadow-violet-100',
+        bgColor: 'bg-violet-50',
+        hoverBg: 'group-hover:bg-violet-100',
+        textColor: 'text-violet-600',
+        features: ['Multiple Images', 'Single PDF', 'Fast'],
       }
     ]
   },
