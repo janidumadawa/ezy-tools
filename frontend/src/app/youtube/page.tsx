@@ -1,84 +1,58 @@
 'use client'
 
 import Header from '@/src/components/youtube/Header'
-import URLInput from '@/src/components/youtube/URLInput'
-import ProgressBar from '@/src/components/youtube/ProgressBar'
-import StatusMessage from '@/src/components/youtube/StatusMessage'
-import VideoInfo from '@/src/components/youtube/VideoInfo'
-import QualitySelector from '@/src/components/youtube/QualitySelector'
-import DownloadButton from '@/src/components/youtube/DownloadButton'
-import { useYouTubeDownloader } from '@/src/hooks/useYouTubeDownloader'
+import { AlertTriangle, Link } from 'lucide-react'
 
 export default function YouTubePage() {
-  const {
-    url,
-    setUrl,
-    videoInfo,
-    error,
-    setError,
-    selectedQuality,
-    setSelectedQuality,
-    downloadState,
-    fetchVideoInfo,
-    downloadVideo
-  } = useYouTubeDownloader()
-
   return (
-    <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-10 lg:py-12 relative overflow-hidden">
-      {/* Background YouTube Logo Watermark - hidden on mobile */}
-
-      <div className="hidden lg:block absolute top-30 left-[10px] pointer-events-none -z-10">
-        <img
-          src="/logos/youtube.png"
-          alt=""
-          className="w-[200px] lg:w-[400px] h-[200px] lg:h-[400px] object-contain opacity-[0.15] blur-sm rotate-[-15deg]"
-        />
+    <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-10 lg:py-12">
+      {/* Back Button */}
+      <div className="mb-4 sm:mb-6">
+        <a href="/" className="text-xs sm:text-sm text-red-600 hover:text-red-800 transition-colors flex items-center gap-1">
+          &larr; Back to Home
+        </a>
       </div>
 
-      {/* Page Content */}
-      <div className="relative z-10">
-        <div className="mb-4 sm:mb-6">
-          <a
-            href="/"
-            className="text-xs sm:text-sm text-red-600 hover:text-red-800 transition-colors flex items-center gap-1"
-          >
-            &larr; Back to Home
-          </a>
-        </div>
+      <Header />
 
-        <Header />
-        <URLInput 
-          url={url}
-          setUrl={setUrl}
-          onSubmit={fetchVideoInfo}
-          downloadState={downloadState}
-        />
-        <ProgressBar downloadState={downloadState} />
-        <StatusMessage 
-          downloadState={downloadState}
-          error={error}
-          setError={setError}
-        />
-
-        {videoInfo && (
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-              <VideoInfo videoInfo={videoInfo} />
-              <div className="p-4 sm:p-6 space-y-4">
-                <QualitySelector 
-                  formats={videoInfo.formats}
-                  selectedQuality={selectedQuality}
-                  onSelect={setSelectedQuality}
-                />
-                <DownloadButton 
-                  onClick={downloadVideo}
-                  downloadState={downloadState}
-                  selectedQuality={selectedQuality}
-                />
-              </div>
-            </div>
+      {/* Unavailable Notice */}
+      <div className="max-w-2xl mx-auto mb-8">
+        <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-8 sm:p-10 text-center">
+          <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <AlertTriangle className="w-8 h-8 text-amber-600" />
           </div>
-        )}
+          <h2 className="text-xl sm:text-2xl font-bold text-amber-800 mb-2">
+            Service Under Development
+          </h2>
+          <p className="text-sm sm:text-base text-amber-700 max-w-md mx-auto">
+            YouTube downloader is currently unavailable on the web version. 
+            We're working on making it available soon.
+          </p>
+        </div>
+      </div>
+
+      {/* Disabled URL Input */}
+      <div className="max-w-2xl mx-auto mb-8">
+        <div className="bg-white rounded-xl border-2 border-gray-200 opacity-50">
+          <div className="flex items-center gap-3 p-3">
+            <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Link className="w-5 h-5 text-gray-400" />
+            </div>
+            <input
+              type="text"
+              value=""
+              placeholder="Service temporarily unavailable..."
+              className="flex-1 min-w-0 text-sm bg-transparent border-none outline-none text-gray-400 placeholder-gray-400 cursor-not-allowed"
+              disabled
+            />
+            <button
+              disabled
+              className="px-6 py-3 bg-gray-300 text-gray-500 rounded-lg text-sm font-semibold flex items-center gap-2 cursor-not-allowed whitespace-nowrap"
+            >
+              Download
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   )

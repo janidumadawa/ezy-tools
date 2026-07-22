@@ -97,10 +97,10 @@ export default function TikTokPage() {
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           TikTok <span className="text-gray-800">Downloader</span>
         </h1>
-        <p className="text-gray-500">
+        <p className="text-gray-900">
           Download TikTok videos without watermark
         </p>
-        <p className="text-sm text-gray-400 mt-1">
+        <p className="text-sm text-gray-900 mt-1">
           TikTok වීඩියෝ පහසුවෙන් Download කරගන්න
         </p>
       </div>
