@@ -46,7 +46,7 @@ export default function PinterestPage() {
       {/* Background Watermarks - hidden on mobile */}
       <div className="hidden md:block absolute top-40 left-100 pointer-events-none -z-10">
         <img
-          src="/logos/pinterest-logo.png"
+          src="/logos/pinterest.png"
           alt="Pinterest Logo"
           className="w-[400px] h-[400px] object-contain opacity-[0.2] blur-sm rotate-12"
         />
@@ -57,7 +57,7 @@ export default function PinterestPage() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <img src="/logos/pinterest-logo.png" alt="Pinterest Logo" className="w-8 h-8 object-contain" />
+            <img src="/logos/pinterest.png" alt="Pinterest Logo" className="w-8 h-8 object-contain" />
         </div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Pinterest <span className="text-red-600">Downloader</span></h1>
         <p className="text-gray-900">Download Pinterest images & videos</p>

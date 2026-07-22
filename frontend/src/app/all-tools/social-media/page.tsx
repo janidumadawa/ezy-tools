@@ -47,7 +47,7 @@ const socialMediaTools = [
     name: 'Pinterest Downloader',
     description: 'Download Pinterest images, pins and videos in high quality',
     href: '/pinterest',
-    icon: '/logos/pinterest-logo.png',
+    icon: '/logos/pinterest.png',
     color: 'red',
     bgColor: 'bg-red-50',
     textColor: 'text-red-600',

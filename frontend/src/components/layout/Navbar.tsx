@@ -31,7 +31,7 @@ const navigation = [
           { name: 'Facebook Downloader', href: '/facebook', icon: '/logos/facebook.png', description: 'Reels & Videos' } as DropdownItem,
           { name: 'TikTok Downloader', href: '/tiktok', icon: '/logos/tik-tok.png', description: 'No watermark videos' } as DropdownItem,
           { name: 'Twitter Downloader', href: '/twitter', icon: '/logos/x.png', description: 'Videos & GIFs' } as DropdownItem,
-          { name: 'Pinterest Downloader', href: '/pinterest', icon: '/logos/pinterest-logo.png', description: 'Videos & Images' } as DropdownItem,
+          { name: 'Pinterest Downloader', href: '/pinterest', icon: '/logos/pinterest.png', description: 'Videos & Images' } as DropdownItem,
           { name: 'Reddit Downloader', href: '/reddit', icon: '/logos/reddit.png', description: 'Videos with audio' } as DropdownItem,
           { name: 'YouTube Downloader', href: '/youtube', icon: '/logos/youtube.png', description: 'Videos & MP3 audio' } as DropdownItem,
           { name: 'Instagram Downloader', href: '/instagram', icon: '/logos/instagram.png', description: 'Reels & Photos' } as DropdownItem,
