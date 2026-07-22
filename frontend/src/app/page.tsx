@@ -90,22 +90,6 @@ const categories: Category[] = [
     icon: RefreshCw,
     tools: [
       {
-        name: 'Word to PDF',
-        sinhala: 'Word PDF බවට',
-        description: 'Convert Word documents to PDF',
-        sinhalaDescription: 'Word documents PDF බවට පරිවර්තනය කරන්න.',
-        href: '/converters/word-to-pdf',
-        icon: null,
-        IconComponent: FileText,
-        color: 'blue',
-        borderColor: 'hover:border-blue-300',
-        shadowColor: 'hover:shadow-blue-100',
-        bgColor: 'bg-blue-50',
-        hoverBg: 'group-hover:bg-blue-100',
-        textColor: 'text-blue-600',
-        features: ['Free', 'Fast', 'Online'],
-      },
-      {
         name: 'PDF to Word',
         sinhala: 'PDF Word බවට',
         description: 'Convert PDF files to Word documents',
@@ -119,7 +103,7 @@ const categories: Category[] = [
         bgColor: 'bg-green-50',
         hoverBg: 'group-hover:bg-green-100',
         textColor: 'text-green-600',
-        features: ['Free', 'Fast', 'Online'],
+        features: [],
       },
       {
         name: 'PPTX to PDF',
@@ -135,7 +119,24 @@ const categories: Category[] = [
         bgColor: 'bg-orange-50',
         hoverBg: 'group-hover:bg-orange-100',
         textColor: 'text-orange-600',
-        features: ['Free', 'Fast', 'Online'],
+        features: [],
+      }
+      ,
+      {
+        name: 'Image to PDF',
+        sinhala: 'Imagers PDF බවට',
+        description: 'Convert Imagers to PDF',
+        sinhalaDescription: 'Imagers PDF බවට පරිවර්තනය කරන්න.',
+        href: '/converters/image-to-pdf',
+        icon: null,
+        IconComponent: ImageIcon,
+        color: 'indigo',
+        borderColor: 'hover:border-indigo-300',
+        shadowColor: 'hover:shadow-indigo-100',
+        bgColor: 'bg-indigo-50',
+        hoverBg: 'group-hover:bg-indigo-100',
+        textColor: 'text-indigo-600',
+        features: [],
       }
     ]
   },

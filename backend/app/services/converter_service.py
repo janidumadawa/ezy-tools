@@ -24,122 +24,49 @@ class ConverterService:
         return "".join(c for c in name if c.isalnum() or c in (' ', '-', '_', '.')).rstrip()
     
     def word_to_pdf(self, file) -> dict:
-        """Convert Word to PDF using LibreOffice (preserves all formatting)"""
         try:
-            import subprocess
-            
+            import platform
             original_name = Path(file.filename).stem
             safe_name = self._sanitize_filename(original_name)
-            
-            # Save uploaded file
             temp_docx = self.download_dir / f"{safe_name}.docx"
             with open(temp_docx, 'wb') as f:
                 f.write(file.file.read())
-            
             output_filename = f"{safe_name}.pdf"
             output_path = self.download_dir / output_filename
-            
-            # Try LibreOffice first (best quality, preserves formatting)
-            try:
-                subprocess.run([
-                    'libreoffice', '--headless', '--convert-to', 'pdf',
-                    '--outdir', str(self.download_dir),
-                    str(temp_docx)
-                ], timeout=60, check=True, capture_output=True)
-                
-                # LibreOffice creates file with same name but .pdf extension
-                expected_pdf = self.download_dir / f"{safe_name}.pdf"
-                if expected_pdf.exists():
+            if docx2pdf_convert and platform.system() == 'Windows':
+                try:
+                    docx2pdf_convert(str(temp_docx), str(output_path))
                     os.unlink(temp_docx)
-                    return {
-                        'success': True,
-                        'data': {
-                            'filename': output_filename,
-                            'download_url': f'/api/converter/file/{output_filename}',
-                            'message': f'{original_name}.pdf ready'
-                        }
-                    }
-            except:
-                pass
-            
-            # Fallback: Use python-docx + reportlab (text only, minimal formatting)
-            try:
-                from docx import Document
-                from reportlab.lib.pagesizes import A4
-                from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-                from reportlab.lib.styles import getSampleStyleSheet
-                from reportlab.lib import colors
-                from reportlab.lib.enums import TA_CENTER, TA_LEFT
-                
-                doc = Document(str(temp_docx))
-                pdf_doc = SimpleDocTemplate(str(output_path), pagesize=A4)
-                styles = getSampleStyleSheet()
-                story = []
-                
-                for para in doc.paragraphs:
-                    if para.text.strip():
-                        text = para.text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
-                        
-                        # Check for heading styles
-                        style_name = para.style.name if para.style else ''
-                        if 'Heading 1' in style_name:
-                            style = styles['Heading1']
-                        elif 'Heading 2' in style_name:
-                            style = styles['Heading2']
-                        elif 'Heading 3' in style_name:
-                            style = styles['Heading3']
-                        else:
-                            style = styles['Normal']
-                        
-                        # Check alignment
-                        if para.alignment == 1:  # Center
-                            style.alignment = TA_CENTER
-                        else:
-                            style.alignment = TA_LEFT
-                        
-                        story.append(Paragraph(text, style))
-                        story.append(Spacer(1, 6))
-                
-                # Handle tables
-                for table in doc.tables:
-                    data = []
-                    for row in table.rows:
-                        row_data = [cell.text.replace('&', '&amp;') for cell in row.cells]
-                        data.append(row_data)
-                    
-                    if data:
-                        t = Table(data)
-                        t.setStyle(TableStyle([
-                            ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
-                            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#884ab2')),
-                            ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-                            ('FONTSIZE', (0, 0), (-1, -1), 9),
-                            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-                            ('PADDING', (0, 0), (-1, -1), 6),
-                        ]))
-                        story.append(t)
-                        story.append(Spacer(1, 12))
-                
-                pdf_doc.build(story)
-                os.unlink(temp_docx)
-                
-                return {
-                    'success': True,
-                    'data': {
-                        'filename': output_filename,
-                        'download_url': f'/api/converter/file/{output_filename}',
-                        'message': f'{original_name}.pdf ready'
-                    }
-                }
-            except:
-                os.unlink(temp_docx)
-                raise Exception("Neither LibreOffice nor python-docx conversion worked")
-                
+                    return {'success': True, 'data': {'filename': output_filename, 'download_url': f'/api/converter/file/{output_filename}', 'message': f'{original_name}.pdf ready'}}
+                except:
+                    pass
+            from docx import Document
+            from reportlab.lib.pagesizes import A4
+            from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+            from reportlab.lib.styles import getSampleStyleSheet
+            from reportlab.lib import colors
+            doc = Document(str(temp_docx))
+            pdf_doc = SimpleDocTemplate(str(output_path), pagesize=A4)
+            styles = getSampleStyleSheet()
+            story = []
+            for para in doc.paragraphs:
+                if para.text.strip():
+                    text = para.text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+                    story.append(Paragraph(text, styles['Normal']))
+                    story.append(Spacer(1, 6))
+            for table in doc.tables:
+                data = [[cell.text for cell in row.cells] for row in table.rows]
+                if data:
+                    t = Table(data)
+                    t.setStyle(TableStyle([('GRID', (0, 0), (-1, -1), 0.5, colors.grey), ('BACKGROUND', (0, 0), (-1, 0), colors.grey), ('TEXTCOLOR', (0, 0), (-1, 0), colors.white), ('FONTSIZE', (0, 0), (-1, -1), 9)]))
+                    story.append(t)
+                    story.append(Spacer(1, 12))
+            pdf_doc.build(story)
+            os.unlink(temp_docx)
+            return {'success': True, 'data': {'filename': output_filename, 'download_url': f'/api/converter/file/{output_filename}', 'message': f'{original_name}.pdf ready'}}
         except Exception as e:
             return {'success': False, 'error': str(e)}
-
-     
+    
     def pdf_to_word(self, file) -> dict:
         try:
             if not Pdf2DocxConverter:
@@ -204,13 +131,7 @@ class ConverterService:
             output_path = self.download_dir / output_filename
             doc = SimpleDocTemplate(str(output_path), pagesize=landscape(A4))
             table = Table(data)
-            table.setStyle(TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                ('FONTSIZE', (0, 0), (-1, -1), 8),
-                ('GRID', (0, 0), (-1, -1), 1, colors.black),
-            ]))
+            table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey), ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke), ('ALIGN', (0, 0), (-1, -1), 'CENTER'), ('FONTSIZE', (0, 0), (-1, -1), 8), ('GRID', (0, 0), (-1, -1), 1, colors.black)]))
             doc.build([table])
             return {'success': True, 'data': {'filename': output_filename, 'download_url': f'/api/converter/file/{output_filename}', 'message': f'{original_name}.pdf ready'}}
         except Exception as e:
@@ -266,6 +187,19 @@ class ConverterService:
         except Exception as e:
             return {'success': False, 'error': str(e)}
 
+    def html_to_pdf(self, file) -> dict:
+        try:
+            from xhtml2pdf import pisa
+            original_name = Path(file.filename).stem
+            safe_name = self._sanitize_filename(original_name)
+            content = file.file.read().decode('utf-8', errors='ignore')
+            output_filename = f"{safe_name}.pdf"
+            output_path = self.download_dir / output_filename
+            with open(output_path, 'wb') as f:
+                pisa.CreatePDF(content, dest=f)
+            return {'success': True, 'data': {'filename': output_filename, 'download_url': f'/api/converter/file/{output_filename}', 'message': f'{original_name}.pdf ready'}}
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
 
     def csv_to_pdf(self, file) -> dict:
         try:
@@ -284,13 +218,7 @@ class ConverterService:
             output_path = self.download_dir / output_filename
             doc = SimpleDocTemplate(str(output_path), pagesize=landscape(A4))
             table = Table(data)
-            table.setStyle(TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#884ab2')),
-                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                ('FONTSIZE', (0, 0), (-1, -1), 8),
-                ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
-            ]))
+            table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#884ab2')), ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke), ('ALIGN', (0, 0), (-1, -1), 'CENTER'), ('FONTSIZE', (0, 0), (-1, -1), 8), ('GRID', (0, 0), (-1, -1), 0.5, colors.grey)]))
             doc.build([table])
             return {'success': True, 'data': {'filename': output_filename, 'download_url': f'/api/converter/file/{output_filename}', 'message': f'{original_name}.pdf ready'}}
         except Exception as e:
