@@ -24,22 +24,74 @@ class ConverterService:
         return "".join(c for c in name if c.isalnum() or c in (' ', '-', '_', '.')).rstrip()
     
     def word_to_pdf(self, file) -> dict:
+        """Convert Word to PDF using python-docx + reportlab"""
         try:
-            if not docx2pdf_convert:
-                return {'success': False, 'error': 'docx2pdf not installed'}
+            from docx import Document
+            from reportlab.lib.pagesizes import A4
+            from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+            from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+            from reportlab.lib.enums import TA_LEFT, TA_CENTER
+            
             original_name = Path(file.filename).stem
             safe_name = self._sanitize_filename(original_name)
-            temp_docx = self.download_dir / f"{safe_name}.docx"
-            with open(temp_docx, 'wb') as f:
-                f.write(file.file.read())
+            
+            # Read Word document
+            doc = Document(file.file)
+            
             output_filename = f"{safe_name}.pdf"
             output_path = self.download_dir / output_filename
-            docx2pdf_convert(str(temp_docx), str(output_path))
-            os.unlink(temp_docx)
-            return {'success': True, 'data': {'filename': output_filename, 'download_url': f'/api/converter/file/{output_filename}', 'message': f'{original_name}.pdf ready'}}
+            
+            # Create PDF
+            pdf_doc = SimpleDocTemplate(str(output_path), pagesize=A4)
+            styles = getSampleStyleSheet()
+            story = []
+            
+            for para in doc.paragraphs:
+                if para.text.strip():
+                    # Handle basic formatting
+                    text = para.text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+                    
+                    if para.style.name.startswith('Heading'):
+                        style = styles['Heading2']
+                    else:
+                        style = styles['Normal']
+                    
+                    story.append(Paragraph(text, style))
+                    story.append(Spacer(1, 6))
+            
+            # Handle tables
+            for table in doc.tables:
+                from reportlab.platypus import Table, TableStyle
+                from reportlab.lib import colors
+                
+                data = []
+                for row in table.rows:
+                    data.append([cell.text for cell in row.cells])
+                
+                if data:
+                    t = Table(data)
+                    t.setStyle(TableStyle([
+                        ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
+                        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#884ab2')),
+                        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                        ('FONTSIZE', (0, 0), (-1, -1), 9),
+                    ]))
+                    story.append(t)
+                    story.append(Spacer(1, 12))
+            
+            pdf_doc.build(story)
+            
+            return {
+                'success': True,
+                'data': {
+                    'filename': output_filename,
+                    'download_url': f'/api/converter/file/{output_filename}',
+                    'message': f'{original_name}.pdf ready'
+                }
+            }
         except Exception as e:
             return {'success': False, 'error': str(e)}
-    
+        
     def pdf_to_word(self, file) -> dict:
         try:
             if not Pdf2DocxConverter:

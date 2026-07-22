@@ -122,7 +122,7 @@ export default function AboutPage() {
               {/* Developer Info */}
               <div className="text-center mb-4">
                 <div className="w-24 h-24 bg-gradient-to-br from-gray-700 to-gray-900 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-3xl font-bold">
-                  <img src="./janidu.png" alt="" />
+                  <img src="./janidu.png" alt="janidu" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">Janidu Madawa</h3>
                 <p className="text-gray-500 text-sm">Full Stack Developer</p>
