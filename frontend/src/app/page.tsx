@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images, QrCode, Box,Key, Type } from 'lucide-react'
+import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images, QrCode, Box,Key, Type, Palette } from 'lucide-react'
 
 // Add unavailable tools list
 const unavailableTools = ['YouTube Downloader', 'Instagram Downloader']
@@ -219,6 +219,22 @@ const categories: Category[] = [
   hoverBg: 'group-hover:bg-teal-100',
   textColor: 'text-teal-600',
   features: ['Word Count', 'Case Convert', 'Clean'],
+},
+{
+  name: 'Color Tools',
+  sinhala:'',
+  description: 'Convert colors',
+  sinhalaDescription:'',
+  href: '/tools/color-tools',
+  icon: null,
+  IconComponent: Palette,
+  color: 'purple',
+  borderColor: 'hover:border-purple-300',
+  shadowColor: 'hover:shadow-purple-100',
+  bgColor: 'bg-purple-50',
+  hoverBg: 'group-hover:bg-purple-100',
+  textColor: 'text-purple-600',
+  features: ['HEX', 'RGB', 'HSL', 'Palette'],
 }
     ]
   },
