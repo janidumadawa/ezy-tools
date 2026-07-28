@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, QrCode, Key, Type, Palette, Ruler } from 'lucide-react'
+import { ArrowLeft, QrCode, Key, Type, Palette, Ruler, Cake } from 'lucide-react'
 
 const otherTools = [
   {
@@ -14,7 +14,6 @@ const otherTools = [
     textColor: 'text-gray-800',
     borderColor: 'border-gray-200',
     features: ['Custom Colors', 'Logo Upload', 'PNG Download'],
-    status: 'active',
   },
   {
     name: 'Password Generator',
@@ -26,7 +25,6 @@ const otherTools = [
     textColor: 'text-indigo-600',
     borderColor: 'border-indigo-200',
     features: ['6-50 Characters', 'A-Z, a-z, 0-9', 'Symbols'],
-    status: 'active',
   },
   {
     name: 'Text Tools',
@@ -38,7 +36,6 @@ const otherTools = [
     textColor: 'text-teal-600',
     borderColor: 'border-teal-200',
     features: ['Word Count', 'Case Convert', 'Clean Text'],
-    status: 'active',
   },
   {
     name: 'Color Tools',
@@ -50,7 +47,6 @@ const otherTools = [
     textColor: 'text-purple-600',
     borderColor: 'border-purple-200',
     features: ['HEX', 'RGB', 'HSL', 'Palette'],
-    status: 'active',
   },
   {
     name: 'Unit Converter',
@@ -62,7 +58,17 @@ const otherTools = [
     textColor: 'text-cyan-600',
     borderColor: 'border-cyan-200',
     features: ['Length', 'Weight', 'Temp', 'Area'],
-    status: 'active',
+  },
+  {
+    name: 'Age Calculator',
+    description: 'Calculate your exact age and time since birth',
+    href: '/tools/age-calculator',
+    icon: Cake,
+    color: 'pink',
+    bgColor: 'bg-pink-50',
+    textColor: 'text-pink-600',
+    borderColor: 'border-pink-200',
+    features: ['Years', 'Months', 'Days', 'Zodiac'],
   },
 ]
 
