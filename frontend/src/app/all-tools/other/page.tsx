@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, QrCode, Key, Type, Palette, Ruler, Cake } from 'lucide-react'
+import { ArrowLeft, QrCode, Key, Type, Palette, Ruler, Cake, Percent } from 'lucide-react'
 
 const otherTools = [
   {
@@ -70,6 +70,20 @@ const otherTools = [
     borderColor: 'border-pink-200',
     features: ['Years', 'Months', 'Days', 'Zodiac'],
   },
+  {
+  name: 'Percentage Calculator',
+  description: 'Calculate percentages easily',
+  href: '/tools/percentage-calculator',
+  icon: Percent,
+  IconComponent: Percent,
+  color: 'rose',
+  borderColor: 'hover:border-rose-300',
+  shadowColor: 'hover:shadow-rose-100',
+  bgColor: 'bg-rose-50',
+  hoverBg: 'group-hover:bg-rose-100',
+  textColor: 'text-rose-600',
+  features: ['% of', '+%', '-%', 'Find %'],
+}
 ]
 
 export default function AllOtherToolsPage() {
