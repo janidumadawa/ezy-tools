@@ -2,9 +2,10 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images, QrCode, Box,Key, Type, Palette,
+import {
+  Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images, QrCode, Box, Key, Type, Palette,
   Ruler
- } from 'lucide-react'
+} from 'lucide-react'
 
 // Add unavailable tools list
 const unavailableTools = ['YouTube Downloader', 'Instagram Downloader']
@@ -207,53 +208,21 @@ const categories: Category[] = [
         features: ['Strong', 'Customizable', 'Free'],
       },
       {
-  name: 'Text Tools',
-  sinhala:'',
-  description: 'Analyze, transform, and clean your text',
-  sinhalaDescription:'',
-  href: '/tools/text-tools',
-  icon: null,
-  IconComponent: Type,
-  color: 'teal',
-  borderColor: 'hover:border-teal-300',
-  shadowColor: 'hover:shadow-teal-100',
-  bgColor: 'bg-teal-50',
-  hoverBg: 'group-hover:bg-teal-100',
-  textColor: 'text-teal-600',
-  features: ['Word Count', 'Case Convert', 'Clean'],
-},
-{
-  name: 'Color Tools',
-  sinhala:'',
-  description: 'Convert colors',
-  sinhalaDescription:'',
-  href: '/tools/color-tools',
-  icon: null,
-  IconComponent: Palette,
-  color: 'purple',
-  borderColor: 'hover:border-purple-300',
-  shadowColor: 'hover:shadow-purple-100',
-  bgColor: 'bg-purple-50',
-  hoverBg: 'group-hover:bg-purple-100',
-  textColor: 'text-purple-600',
-  features: ['HEX', 'RGB', 'HSL', 'Palette'],
-},
-{
-  name: 'Unit Converter',
-  sinhala:'',
-  description: 'Convert between length, weight, temperature, and area units',
-  sinhalaDescription:'',
-  href: '/tools/unit-converter',
-  icon: null,
-  IconComponent: Ruler,
-  color: 'cyan',
-  borderColor: 'hover:border-cyan-300',
-  shadowColor: 'hover:shadow-cyan-100',
-  bgColor: 'bg-cyan-50',
-  hoverBg: 'group-hover:bg-cyan-100',
-  textColor: 'text-cyan-600',
-  features: ['Length', 'Weight', 'Temp', 'Area'],
-}
+        name: 'Text Tools',
+        sinhala: '',
+        description: 'Analyze, transform, and clean your text',
+        sinhalaDescription: '',
+        href: '/tools/text-tools',
+        icon: null,
+        IconComponent: Type,
+        color: 'teal',
+        borderColor: 'hover:border-teal-300',
+        shadowColor: 'hover:shadow-teal-100',
+        bgColor: 'bg-teal-50',
+        hoverBg: 'group-hover:bg-teal-100',
+        textColor: 'text-teal-600',
+        features: ['Word Count', 'Case Convert', 'Clean'],
+      }
     ]
   },
 
@@ -308,9 +277,9 @@ export default function Home() {
 
 
             {/* See All link in header - for Social Media (index 0) and File Converters (index 1) */}
-            {(catIndex === 0 || catIndex === 1) && (
+            {(catIndex === 0 || catIndex === 1 || catIndex === 3) && (
               <Link
-                href={catIndex === 0 ? "/all-tools/social-media" : "/all-tools/converters"}
+                href={catIndex === 0 ? "/all-tools/social-media" : catIndex === 1 ? "/all-tools/converters" : "/all-tools/other"}
                 className="hidden sm:inline-flex items-center gap-1 text-sm text-purple-600 hover:text-purple-700 font-medium"
               >
                 See All
@@ -397,13 +366,13 @@ export default function Home() {
           </div>
 
           {/* See All Button - Mobile */}
-          {(catIndex === 0 || catIndex === 1) && (
+          {(catIndex === 0 || catIndex === 1 || catIndex === 3) && (
             <div className="text-center mt-4 sm:mt-5">
               <Link
-                href={catIndex === 0 ? "/all-tools/social-media" : "/all-tools/converters"}
+                href={catIndex === 0 ? "/all-tools/social-media" : catIndex === 1 ? "/all-tools/converters" : "/all-tools/other"}
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-purple-50 text-purple-700 hover:bg-purple-100 rounded-lg text-sm font-medium transition-colors sm:hidden"
               >
-                See All {catIndex === 0 ? 'Social Media' : 'File Converter'} Tools
+                See All {catIndex === 0 ? 'Social Media' : catIndex === 1 ? 'File Converter' : 'Other'} Tools
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
