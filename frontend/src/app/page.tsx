@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images, QrCode, Box } from 'lucide-react'
+import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images, QrCode, Box,Key } from 'lucide-react'
 
 // Add unavailable tools list
 const unavailableTools = ['YouTube Downloader', 'Instagram Downloader']
@@ -163,33 +163,49 @@ const categories: Category[] = [
       }
     ]
   },
-{
-  name: 'Other Tools',
-  sinhala: 'වෙනත් Tools',
-  icon: Box,
-  tools: [
-    {
-      name: 'QR Code Generator',
-      sinhala: 'QR Code සාදා ගන්න',
-      description: 'Generate QR codes from text or URLs',
-      sinhalaDescription: 'Text එකක් හෝ URL එකක් භාවිතා කර QR Code එකක් සාදා ගන්න.',
-      href: '/tools/qr-generator',
-      icon: null,
-      IconComponent: QrCode,
-      color: 'gray',
-      borderColor: 'hover:border-gray-400',
-      shadowColor: 'hover:shadow-gray-100',
-      bgColor: 'bg-gray-100',
-      hoverBg: 'group-hover:bg-gray-200',
-      textColor: 'text-gray-800',
-      features: [
-        'Free',
-        'Custom Colors',
-        'PNG Download'
-      ],
-    }
-  ]
-},
+  {
+    name: 'Other Tools',
+    sinhala: 'වෙනත් Tools',
+    icon: Box,
+    tools: [
+      {
+        name: 'QR Code Generator',
+        sinhala: 'QR Code සාදා ගන්න',
+        description: 'Generate QR codes from text or URLs',
+        sinhalaDescription: 'Text එකක් හෝ URL එකක් භාවිතා කර QR Code එකක් සාදා ගන්න.',
+        href: '/tools/qr-generator',
+        icon: null,
+        IconComponent: QrCode,
+        color: 'gray',
+        borderColor: 'hover:border-gray-400',
+        shadowColor: 'hover:shadow-gray-100',
+        bgColor: 'bg-gray-100',
+        hoverBg: 'group-hover:bg-gray-200',
+        textColor: 'text-gray-800',
+        features: [
+          'Free',
+          'Custom Colors',
+          'PNG Download'
+        ],
+      },
+      {
+        name: 'Password Generator',
+        sinhala: '',
+        description: 'Generate strong, secure passwords instantly',
+        sinhalaDescription: '',
+        href: '/tools/password-generator',
+        icon: null,
+        IconComponent: Key,
+        color: 'indigo',
+        borderColor: 'hover:border-indigo-300',
+        shadowColor: 'hover:shadow-indigo-100',
+        bgColor: 'bg-indigo-50',
+        hoverBg: 'group-hover:bg-indigo-100',
+        textColor: 'text-indigo-600',
+        features: ['Strong', 'Customizable', 'Free'],
+      }
+    ]
+  },
 
 ]
 
