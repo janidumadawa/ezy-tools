@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images, QrCode, Box,Key } from 'lucide-react'
+import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images, QrCode, Box,Key, Type } from 'lucide-react'
 
 // Add unavailable tools list
 const unavailableTools = ['YouTube Downloader', 'Instagram Downloader']
@@ -203,7 +203,23 @@ const categories: Category[] = [
         hoverBg: 'group-hover:bg-indigo-100',
         textColor: 'text-indigo-600',
         features: ['Strong', 'Customizable', 'Free'],
-      }
+      },
+      {
+  name: 'Text Tools',
+  sinhala:'',
+  description: 'Analyze, transform, and clean your text',
+  sinhalaDescription:'',
+  href: '/tools/text-tools',
+  icon: null,
+  IconComponent: Type,
+  color: 'teal',
+  borderColor: 'hover:border-teal-300',
+  shadowColor: 'hover:shadow-teal-100',
+  bgColor: 'bg-teal-50',
+  hoverBg: 'group-hover:bg-teal-100',
+  textColor: 'text-teal-600',
+  features: ['Word Count', 'Case Convert', 'Clean'],
+}
     ]
   },
 
