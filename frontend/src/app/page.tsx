@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images } from 'lucide-react'
+import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images, QrCode, Box } from 'lucide-react'
 
 // Add unavailable tools list
 const unavailableTools = ['YouTube Downloader', 'Instagram Downloader']
@@ -163,6 +163,34 @@ const categories: Category[] = [
       }
     ]
   },
+{
+  name: 'Other Tools',
+  sinhala: 'වෙනත් Tools',
+  icon: Box,
+  tools: [
+    {
+      name: 'QR Code Generator',
+      sinhala: 'QR Code සාදා ගන්න',
+      description: 'Generate QR codes from text or URLs',
+      sinhalaDescription: 'Text එකක් හෝ URL එකක් භාවිතා කර QR Code එකක් සාදා ගන්න.',
+      href: '/tools/qr-generator',
+      icon: null,
+      IconComponent: QrCode,
+      color: 'gray',
+      borderColor: 'hover:border-gray-400',
+      shadowColor: 'hover:shadow-gray-100',
+      bgColor: 'bg-gray-100',
+      hoverBg: 'group-hover:bg-gray-200',
+      textColor: 'text-gray-800',
+      features: [
+        'Free',
+        'Custom Colors',
+        'PNG Download'
+      ],
+    }
+  ]
+},
+
 ]
 
 export default function Home() {
@@ -170,14 +198,11 @@ export default function Home() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
       {/* Hero Section */}
       <div className="text-center mb-10 sm:mb-14 lg:mb-16">
-        <div className="relative w-40 h-40 sm:w-56 sm:h-56 lg:w-[450px] lg:h-[180px] mx-auto mb-6 sm:mb-8">
-          <Image
+        <div className="mx-auto mb-6 sm:mb-8 flex justify-center">
+          <img
             src="/logo3-nobg.png"
             alt="EzyTools Logo"
-            fill
-            className="object-contain"
-            priority
-            sizes="(max-width: 640px) 160px, (max-width: 1024px) 224px, 450px"
+            className="w-40 sm:w-56 lg:w-[450px] h-auto object-contain"
           />
         </div>
 
@@ -197,12 +222,10 @@ export default function Home() {
           <div className="flex items-center justify-between mb-4 sm:mb-6">
             <div className="flex items-center gap-2 sm:gap-3">
               {typeof category.icon === 'string' ? (
-                <Image
+                <img
                   src={category.icon}
                   alt={category.name}
-                  width={24}
-                  height={24}
-                  className="w-6 h-6 sm:w-7 sm:h-7"
+                  className="w-6 h-6 sm:w-7 sm:h-7 object-contain"
                 />
               ) : (
                 <category.icon className="w-6 h-6 sm:w-7 sm:h-7 text-gray-600" />
@@ -255,12 +278,10 @@ export default function Home() {
                   <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
                     <div className={`w-10 h-10 sm:w-12 sm:h-12 ${tool.bgColor} rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 ${tool.hoverBg} transition-colors`}>
                       {tool.icon ? (
-                        <Image
+                        <img
                           src={tool.icon}
                           alt={tool.name}
-                          width={20}
-                          height={20}
-                          className="w-5 h-5 sm:w-6 sm:h-6"
+                          className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
                         />
                       ) : tool.IconComponent ? (
                         <tool.IconComponent className={`w-5 h-5 sm:w-6 sm:h-6 ${tool.textColor}`} />
