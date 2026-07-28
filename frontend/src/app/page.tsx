@@ -2,7 +2,9 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images, QrCode, Box,Key, Type, Palette } from 'lucide-react'
+import { Wrench, FileText, ImageIcon, RefreshCw, LucideIcon, AlertTriangle, ArrowRight, Images, QrCode, Box,Key, Type, Palette,
+  Ruler
+ } from 'lucide-react'
 
 // Add unavailable tools list
 const unavailableTools = ['YouTube Downloader', 'Instagram Downloader']
@@ -235,6 +237,22 @@ const categories: Category[] = [
   hoverBg: 'group-hover:bg-purple-100',
   textColor: 'text-purple-600',
   features: ['HEX', 'RGB', 'HSL', 'Palette'],
+},
+{
+  name: 'Unit Converter',
+  sinhala:'',
+  description: 'Convert between length, weight, temperature, and area units',
+  sinhalaDescription:'',
+  href: '/tools/unit-converter',
+  icon: null,
+  IconComponent: Ruler,
+  color: 'cyan',
+  borderColor: 'hover:border-cyan-300',
+  shadowColor: 'hover:shadow-cyan-100',
+  bgColor: 'bg-cyan-50',
+  hoverBg: 'group-hover:bg-cyan-100',
+  textColor: 'text-cyan-600',
+  features: ['Length', 'Weight', 'Temp', 'Area'],
 }
     ]
   },
