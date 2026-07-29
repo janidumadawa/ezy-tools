@@ -3,7 +3,12 @@ import Image from "next/image";
 import { useState } from 'react'
 import axios from 'axios'
 import { Download, Loader2, CheckCircle, AlertCircle, Video, Music, Clock, User } from 'lucide-react'
+import type { Metadata } from 'next'
 
+export const metadata: Metadata = {
+  title: 'Facebook Video Downloader - HD Reels & Videos',
+  description: 'Download Facebook Reels and videos in HD quality. Free online Facebook video downloader with MP3 audio extraction.',
+}
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/facebook`
 
 interface VideoInfo {

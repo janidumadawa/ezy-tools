@@ -4,7 +4,11 @@ import { useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import { Download, Loader2, CheckCircle, AlertCircle, Play } from 'lucide-react'
-
+import type { Metadata } from 'next'
+export const metadata: Metadata = {
+  title: 'TikTok Downloader - No Watermark Videos',
+  description: 'Download TikTok videos without watermark in HD quality. Free online TikTok video downloader.',
+}
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/tiktok`
 
 interface VideoInfo {

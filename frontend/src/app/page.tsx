@@ -7,6 +7,16 @@ import {
   Ruler, Music
 } from 'lucide-react'
 
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'EzyTools - Free Online Tools for Everyday Tasks',
+  description: 'EzyTools offers 30+ free online tools for video downloading, file conversion, PDF editing, image manipulation, and everyday utilities.',
+  alternates: {
+    canonical: 'https://ezy-tools.vercel.app',
+  },
+}
+
 // Add unavailable tools list
 const unavailableTools = ['YouTube Downloader', 'Instagram Downloader']
 

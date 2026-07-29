@@ -4,7 +4,12 @@ import { useState, useRef } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import { QrCode, Download, Loader2, RefreshCw, Upload, X } from 'lucide-react'
+import type { Metadata } from 'next'
 
+export const metadata: Metadata = {
+  title: 'QR Code Generator - Custom Colors & Logo',
+  description: 'Generate custom QR codes with colors and logo. Free online QR code generator with PNG download.',
+}
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/qr`
 
 export default function QRGeneratorPage() {
