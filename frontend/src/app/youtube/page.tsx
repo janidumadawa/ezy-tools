@@ -2,12 +2,6 @@
 
 import Header from '@/src/components/youtube/Header'
 import { AlertTriangle, Link } from 'lucide-react'
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'YouTube Video Downloader - HD & MP3',
-  description: 'Download YouTube videos in HD quality or extract MP3 audio. Free, fast, and no registration required.',
-}
 
 export default function YouTubePage() {
   return (

@@ -3,12 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { FileText, Scissors, Layers, Shrink, RotateCw, Trash2, FileType, ImageIcon } from 'lucide-react'
-import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'PDF Tools - Merge, Split, Compress PDF Online',
-  description: 'Free online PDF tools. Merge, split, compress PDF files, and extract text. No registration required.',
-}
 const pdfTools = [
   {
     name: 'Merge PDF',
