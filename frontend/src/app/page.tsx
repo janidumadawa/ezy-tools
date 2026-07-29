@@ -225,6 +225,29 @@ const categories: Category[] = [
       }
     ]
   },
+  {
+  name: 'Image Tools',
+  sinhala: '',
+  icon: ImageIcon,
+  tools: [
+    {
+      name: 'Image Editor',
+      sinhala:'',
+      description: 'Adjust brightness, contrast, rotate, and flip images',
+      sinhalaDescription:'',
+      href: '/image-tools/image-editor',
+      icon: null,
+      IconComponent: ImageIcon,
+      color: 'red',
+      borderColor: 'hover:border-red-300',
+      shadowColor: 'hover:shadow-red-100',
+      bgColor: 'bg-red-50',
+      hoverBg: 'group-hover:bg-red-100',
+      textColor: 'text-red-600',
+      features: ['Brightness', 'Contrast', 'Rotate', 'Flip'],
+    },
+  ]
+},
 
 ]
 
