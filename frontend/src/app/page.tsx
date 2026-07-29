@@ -143,6 +143,29 @@ const categories: Category[] = [
       }
     ]
   },
+   {
+    name: 'Audio Tools',
+    sinhala: '',
+    icon: ImageIcon,
+    tools: [
+      {
+        name: 'Audio Converter',
+        sinhala: '',
+        description: 'Convert audio between MP3, WAV, OGG, FLAC formats',
+        sinhalaDescription: '',
+        href: '/audio-tools/audio-converter',
+        icon: null,
+        IconComponent: Music,
+        color: 'green',
+        borderColor: 'hover:border-green-300',
+        shadowColor: 'hover:shadow-green-100',
+        bgColor: 'bg-green-50',
+        hoverBg: 'group-hover:bg-green-100',
+        textColor: 'text-green-600',
+        features: ['MP3', 'WAV', 'OGG', 'FLAC'],
+      },
+    ]
+  },
   {
     name: 'Document Tools',
     sinhala: '',
@@ -166,6 +189,47 @@ const categories: Category[] = [
       }
     ]
   },
+  
+  {
+    name: 'Image Tools',
+    sinhala: '',
+    icon: ImageIcon,
+    tools: [
+      {
+        name: 'Image Editor',
+        sinhala: '',
+        description: 'Adjust brightness, contrast, rotate, and flip images',
+        sinhalaDescription: '',
+        href: '/image-tools/image-editor',
+        icon: null,
+        IconComponent: ImageIcon,
+        color: 'red',
+        borderColor: 'hover:border-red-300',
+        shadowColor: 'hover:shadow-red-100',
+        bgColor: 'bg-red-50',
+        hoverBg: 'group-hover:bg-red-100',
+        textColor: 'text-red-600',
+        features: ['Brightness', 'Contrast', 'Rotate', 'Flip'],
+      },
+      {
+        name: 'Meme Generator',
+        sinhala: '',
+        description: 'Create custom memes with text and templates',
+        sinhalaDescription: '',
+        href: '/image-tools/meme-generator',
+        icon: null,
+        IconComponent: ImageIcon,
+        color: 'yellow',
+        borderColor: 'hover:border-yellow-300',
+        shadowColor: 'hover:shadow-yellow-100',
+        bgColor: 'bg-yellow-50',
+        hoverBg: 'group-hover:bg-yellow-100',
+        textColor: 'text-yellow-600',
+        features: ['Templates', 'Custom Text', 'Download'],
+      },
+    ]
+  },
+  
   {
     name: 'Other Tools',
     sinhala: 'වෙනත් Tools',
@@ -225,68 +289,7 @@ const categories: Category[] = [
       }
     ]
   },
-  {
-    name: 'Image Tools',
-    sinhala: '',
-    icon: ImageIcon,
-    tools: [
-      {
-        name: 'Image Editor',
-        sinhala: '',
-        description: 'Adjust brightness, contrast, rotate, and flip images',
-        sinhalaDescription: '',
-        href: '/image-tools/image-editor',
-        icon: null,
-        IconComponent: ImageIcon,
-        color: 'red',
-        borderColor: 'hover:border-red-300',
-        shadowColor: 'hover:shadow-red-100',
-        bgColor: 'bg-red-50',
-        hoverBg: 'group-hover:bg-red-100',
-        textColor: 'text-red-600',
-        features: ['Brightness', 'Contrast', 'Rotate', 'Flip'],
-      },
-      {
-        name: 'Meme Generator',
-        sinhala: '',
-        description: 'Create custom memes with text and templates',
-        sinhalaDescription: '',
-        href: '/image-tools/meme-generator',
-        icon: null,
-        IconComponent: ImageIcon,
-        color: 'yellow',
-        borderColor: 'hover:border-yellow-300',
-        shadowColor: 'hover:shadow-yellow-100',
-        bgColor: 'bg-yellow-50',
-        hoverBg: 'group-hover:bg-yellow-100',
-        textColor: 'text-yellow-600',
-        features: ['Templates', 'Custom Text', 'Download'],
-      },
-    ]
-  },
-  {
-    name: 'Audio Tools',
-    sinhala: '',
-    icon: ImageIcon,
-    tools: [
-      {
-        name: 'Audio Converter',
-        sinhala: '',
-        description: 'Convert audio between MP3, WAV, OGG, FLAC formats',
-        sinhalaDescription: '',
-        href: '/audio-tools/audio-converter',
-        icon: null,
-        IconComponent: Music,
-        color: 'green',
-        borderColor: 'hover:border-green-300',
-        shadowColor: 'hover:shadow-green-100',
-        bgColor: 'bg-green-50',
-        hoverBg: 'group-hover:bg-green-100',
-        textColor: 'text-green-600',
-        features: ['MP3', 'WAV', 'OGG', 'FLAC'],
-      },
-    ]
-  }
+ 
 
 ]
 
@@ -339,7 +342,7 @@ export default function Home() {
 
 
             {/* See All link in header - for Social Media (index 0) and File Converters (index 1) */}
-            {(catIndex === 0 || catIndex === 1 || catIndex === 3) && (
+            {(catIndex === 0 || catIndex === 1 || catIndex === 5) && (
               <Link
                 href={catIndex === 0 ? "/all-tools/social-media" : catIndex === 1 ? "/all-tools/converters" : "/all-tools/other"}
                 className="hidden sm:inline-flex items-center gap-1 text-sm text-purple-600 hover:text-purple-700 font-medium"
@@ -428,7 +431,7 @@ export default function Home() {
           </div>
 
           {/* See All Button - Mobile */}
-          {(catIndex === 0 || catIndex === 1 || catIndex === 3) && (
+          {(catIndex === 0 || catIndex === 1 || catIndex === 5) && (
             <div className="text-center mt-4 sm:mt-5">
               <Link
                 href={catIndex === 0 ? "/all-tools/social-media" : catIndex === 1 ? "/all-tools/converters" : "/all-tools/other"}
