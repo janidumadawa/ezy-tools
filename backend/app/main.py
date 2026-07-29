@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .config import CORS_ORIGINS, FFMPEG_PATH
-from .routers import youtube, instagram, facebook, pdf, tiktok, pinterest, reddit, twitter, converter, qr, tts  # Import the new router
+from .routers import youtube, instagram, facebook, pdf, tiktok, pinterest, reddit, twitter, converter, qr, tts, barcode  # Import the new router
 
 app = FastAPI(title="EzyTools API")
 
@@ -25,6 +25,7 @@ app.include_router(twitter.router)  # Add this
 app.include_router(converter.router)  # Include the converter router
 app.include_router(qr.router)
 app.include_router(tts.router)
+app.include_router(barcode.router)
 
 @app.get("/")
 async def root():

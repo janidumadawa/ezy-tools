@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, QrCode, Key, Type, Palette, Ruler, Cake, Percent, Volume2, Braces, Code2, FileText, Globe } from 'lucide-react'
+import { ArrowLeft, QrCode, Key, Type, Palette, Ruler, Cake, Percent, Volume2, Braces, Code2, Globe, Barcode } from 'lucide-react'
 
 const otherTools = [
   {
@@ -15,6 +15,20 @@ const otherTools = [
     borderColor: 'border-gray-200',
     features: ['Custom Colors', 'Logo Upload', 'PNG Download'],
   },
+  {
+  name: 'Barcode Generator',
+  description: 'Generate Code 128, EAN, UPC barcodes',
+  href: '/tools/barcode-generator',
+  icon: Barcode,
+  IconComponent: Barcode,
+  color: 'slate',
+  borderColor: 'hover:border-slate-300',
+  shadowColor: 'hover:shadow-slate-100',
+  bgColor: 'bg-slate-100',
+  hoverBg: 'group-hover:bg-slate-200',
+  textColor: 'text-slate-700',
+  features: ['Code 128', 'EAN', 'UPC', 'PNG'],
+},
   {
     name: 'Password Generator',
     description: 'Generate strong, secure passwords with customizable length and characters',
