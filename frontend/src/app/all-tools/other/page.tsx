@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, QrCode, Key, Type, Palette, Ruler, Cake, Percent } from 'lucide-react'
+import { ArrowLeft, QrCode, Key, Type, Palette, Ruler, Cake, Percent, Volume2 } from 'lucide-react'
 
 const otherTools = [
   {
@@ -83,6 +83,22 @@ const otherTools = [
   hoverBg: 'group-hover:bg-rose-100',
   textColor: 'text-rose-600',
   features: ['% of', '+%', '-%', 'Find %'],
+},
+{
+  name: 'Text to Speech',
+  sinhala: 'Text එක Audio බවට',
+  description: 'Convert text into natural sounding audio',
+  sinhalaDescription: 'text එකක් audio එකක් බවට convert කරන්න.',
+  href: '/tools/text-to-speech',
+  icon: Volume2,
+  IconComponent: Volume2,
+  color: 'emerald',
+  borderColor: 'hover:border-emerald-300',
+  shadowColor: 'hover:shadow-emerald-100',
+  bgColor: 'bg-emerald-50',
+  hoverBg: 'group-hover:bg-emerald-100',
+  textColor: 'text-emerald-600',
+  features: ['11 Languages', 'MP3 Download', 'Sinhala Support'],
 }
 ]
 
