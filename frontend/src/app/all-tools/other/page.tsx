@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, QrCode, Key, Type, Palette, Ruler, Cake, Percent, Volume2, Braces, Code2 } from 'lucide-react'
+import { ArrowLeft, QrCode, Key, Type, Palette, Ruler, Cake, Percent, Volume2, Braces, Code2, FileText, Globe } from 'lucide-react'
 
 const otherTools = [
   {
@@ -128,6 +128,21 @@ const otherTools = [
   textColor: 'text-orange-600',
   features: ['Format', 'Minify', 'Validate'],
 },
+{
+  name: 'IP Lookup',
+  description: 'Find location and details of any IP address',
+  href: '/tools/ip-lookup',
+  icon: Globe,
+  IconComponent: Globe,
+  color: 'sky',
+  borderColor: 'hover:border-sky-300',
+  shadowColor: 'hover:shadow-sky-100',
+  bgColor: 'bg-sky-50',
+  hoverBg: 'group-hover:bg-sky-100',
+  textColor: 'text-sky-600',
+  features: ['City', 'ISP', 'Location', 'Map'],
+},
+
 ]
 
 export default function AllOtherToolsPage() {
