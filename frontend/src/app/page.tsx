@@ -246,6 +246,22 @@ const categories: Category[] = [
       textColor: 'text-red-600',
       features: ['Brightness', 'Contrast', 'Rotate', 'Flip'],
     },
+    {
+  name: 'Meme Generator',
+  sinhala:'',
+  description: 'Create custom memes with text and templates',
+  sinhalaDescription:'',
+  href: '/image-tools/meme-generator',
+  icon: null,
+  IconComponent: ImageIcon,
+  color: 'yellow',
+  borderColor: 'hover:border-yellow-300',
+  shadowColor: 'hover:shadow-yellow-100',
+  bgColor: 'bg-yellow-50',
+  hoverBg: 'group-hover:bg-yellow-100',
+  textColor: 'text-yellow-600',
+  features: ['Templates', 'Custom Text', 'Download'],
+},
   ]
 },
 
