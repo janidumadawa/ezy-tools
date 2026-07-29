@@ -44,28 +44,28 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://ezy-tools.vercel.app',
-    siteName: 'EzyTools',
-    title: 'EzyTools - Free Online Tools for Everyday Tasks',
-    description: 'EzyTools offers 30+ free online tools for video downloading, file conversion, PDF editing, image manipulation, and everyday utilities.',
-    images: [
-      {
-        url: '/logo3-nobg.png',
-        width: 512,
-        height: 512,
-        alt: 'EzyTools Logo',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'EzyTools - Free Online Tools for Everyday Tasks',
-    description: 'EzyTools offers 30+ free online tools for video downloading, file conversion, PDF editing, image manipulation, and everyday utilities.',
-    images: ['/logo3-nobg.png'],
-  },
+ openGraph: {
+  type: 'website',
+  locale: 'en_US',
+  url: 'https://ezy-tools.vercel.app',
+  siteName: 'EzyTools',
+  title: 'EzyTools - Free Online Tools for Everyday Tasks',
+  description: '30+ free online tools for video downloading, file conversion, PDF editing, and more. No registration required.',
+  images: [
+    {
+      url: '/og-image.png', 
+      width: 1200,
+      height: 630,
+      alt: 'EzyTools - Free Online Tools',
+    },
+  ],
+},
+twitter: {
+  card: 'summary_large_image',
+  title: 'EzyTools - Free Online Tools for Everyday Tasks',
+  description: '30+ free online tools for video downloading, file conversion, PDF editing, and more.',
+  images: ['/og-image.png'],  
+},
   robots: {
     index: true,
     follow: true,
