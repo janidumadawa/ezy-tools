@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, QrCode, Key, Type, Palette, Ruler, Cake, Percent, Volume2 } from 'lucide-react'
+import { ArrowLeft, QrCode, Key, Type, Palette, Ruler, Cake, Percent, Volume2, Braces, Code2 } from 'lucide-react'
 
 const otherTools = [
   {
@@ -99,7 +99,35 @@ const otherTools = [
   hoverBg: 'group-hover:bg-emerald-100',
   textColor: 'text-emerald-600',
   features: ['11 Languages', 'MP3 Download', 'Sinhala Support'],
-}
+},
+{
+  name: 'Base64 Encoder',
+  description: 'Encode or decode text to/from Base64',
+  href: '/tools/base64',
+  icon: Code2,
+  IconComponent: Code2,
+  color: 'amber',
+  borderColor: 'hover:border-amber-300',
+  shadowColor: 'hover:shadow-amber-100',
+  bgColor: 'bg-amber-50',
+  hoverBg: 'group-hover:bg-amber-100',
+  textColor: 'text-amber-600',
+  features: ['Encode', 'Decode', 'Copy'],
+},
+{
+  name: 'JSON Formatter',
+  description: 'Format, validate, and minify JSON data',
+  href: '/tools/json-formatter',
+  icon: Braces,
+  IconComponent: Braces,
+  color: 'orange',
+  borderColor: 'hover:border-orange-300',
+  shadowColor: 'hover:shadow-orange-100',
+  bgColor: 'bg-orange-50',
+  hoverBg: 'group-hover:bg-orange-100',
+  textColor: 'text-orange-600',
+  features: ['Format', 'Minify', 'Validate'],
+},
 ]
 
 export default function AllOtherToolsPage() {
